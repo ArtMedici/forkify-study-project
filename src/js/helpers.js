@@ -30,3 +30,16 @@ export const AJAX = async function (url, uploadData = undefined) {
     throw err;
   }
 };
+
+export const decimalToFraction = function (decimal) {
+  if (decimal >= 1) return decimal.toString();
+
+  if (decimal % 1 === 0) return decimal.toString();
+
+  const len = decimal.toString().split('.')[1].length;
+  const num = decimal * 10 ** len;
+  const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+  const divisor = gcd(num, 10 ** len);
+
+  return `${num / divisor}/${10 ** len / divisor}`;
+};
